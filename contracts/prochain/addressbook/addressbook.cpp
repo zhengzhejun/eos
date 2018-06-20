@@ -37,7 +37,7 @@ public:
         require_auth(account);
 
         address_index addresses(_self, _self);
-        auto itr = address_index.find(account);
+        auto itr = addresses.find(account);
         eosio_assert(itr != addresses.end(), "Address for account not found");
 
         addresses.modify(itr, account, [&](auto& address) {
@@ -66,11 +66,11 @@ public:
         addresses.modify(itr, 0, [&](auto& address) {
             eosio::print("Liking: ", address.name.c_str(), "\n");
             address.liked++;
-        })
+        });
     }
 
     void likebyphone(uint64_t phone) {
-        eosio::print("enter like by phone," phone);
+        eosio::print("enter like by phone,", phone);
         address_index addresses(_self, _self);
         auto phone_index = addresses.get_index<N(phone)>();
         auto itr = phone_index.lower_bound(phone);
@@ -78,7 +78,7 @@ public:
             phone_index.modify(itr, 0, [&](auto& address) {
                 eosio::print("liking:", address.name.c_str(), "\n");
                 address.liked++;
-            })
+            });
         }
     }
 
