@@ -44,7 +44,7 @@ public:
             address.account = account;
             address.name = name;
             address.phone = phone;
-        })
+        });
 
     }
 
