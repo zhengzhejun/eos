@@ -97,7 +97,7 @@ private:
         EOSLIB_SERIALIZE(address, (account)(name)(phone)(liked));
     };
 
-    typedef eosio::multi_index<N(taddress), address, indexed_by<N(phone), const_mem_fun<address, uint64_t, &address::get_phone>>> address_index;
+    typedef eosio::multi_index<N(address), address, indexed_by<N(phone), const_mem_fun<address, uint64_t, &address::get_phone>>> address_index;
 };
 
 EOSIO_ABI(addressbook, (add)(update)(remove)(like)(likebyphone))
