@@ -98,3 +98,5 @@ private:
     typedef eosio::multi_index<N(taddress), address, indexed_by<N(phone), const_mem_fun<address, uint64_t, &address::get_phone>>> address_index;
 };
 
+EOSIO_ABI(addressbook, (add)(update)(remove)(like)(likebyphone))
+
