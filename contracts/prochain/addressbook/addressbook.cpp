@@ -14,6 +14,7 @@ class addressbook : public eosio::contract {
 public:
     explicit addressbook(action_name self) : contract(self) {};
 
+    //@abi action
     void add(const account_name account, const string& name, uint64_t phone) {
 
         eosio::print("enter add, ", eosio::name{account});
@@ -32,6 +33,7 @@ public:
         });
     }
 
+    //@abi action
     void update(const account_name account, const string& name, uint64_t phone) {
         eosio::print("enter update,", eosio::name{account});
         require_auth(account);
@@ -48,6 +50,7 @@ public:
 
     }
 
+    //@abi action
     void remove(const account_name account, const string& name, uint64_t phone) {
         eosio::print("enter remove,", eosio::name{account});
         address_index addresses(_self, _self);
@@ -57,6 +60,7 @@ public:
         addresses.erase(itr);
     }
 
+    //@abi action
     void like(const account_name account) {
         eosio::print("enter like, ", eosio::name{account});
         address_index addresses(_self, _self);
@@ -69,6 +73,7 @@ public:
         });
     }
 
+    //@abi action
     void likebyphone(uint64_t phone) {
         eosio::print("enter like by phone,", phone);
         address_index addresses(_self, _self);
@@ -85,6 +90,7 @@ public:
 
 
 private:
+    //@abi table taddress i64
     struct address {
         action_name account;
         string name;
@@ -97,7 +103,7 @@ private:
         EOSLIB_SERIALIZE(address, (account)(name)(phone)(liked));
     };
 
-    typedef eosio::multi_index<N(address), address, indexed_by<N(phone), const_mem_fun<address, uint64_t, &address::get_phone>>> address_index;
+    typedef eosio::multi_index<N(taddress), address, indexed_by<N(phone), const_mem_fun<address, uint64_t, &address::get_phone>>> address_index;
 };
 
 EOSIO_ABI(addressbook, (add)(update)(remove)(like)(likebyphone))
