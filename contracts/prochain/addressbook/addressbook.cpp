@@ -93,6 +93,8 @@ private:
 
         uint64_t primary_key() const { return account; }
         uint64_t get_phone() const { return phone; }
+
+        EOSLIB_SERIALIZE(address, (account)(name)(phone)(liked));
     };
 
     typedef eosio::multi_index<N(taddress), address, indexed_by<N(phone), const_mem_fun<address, uint64_t, &address::get_phone>>> address_index;
