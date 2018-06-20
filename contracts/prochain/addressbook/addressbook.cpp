@@ -20,7 +20,7 @@ public:
         eosio::print("enter add, ", eosio::name{account});
         require_auth(account);
 
-        eosio::print("contract owner is ", eosio::name{account});
+        eosio::print("contract owner is ", eosio::name{_self});
         address_index addresses(_self, _self);
 
         auto itr = addresses.find(account);
