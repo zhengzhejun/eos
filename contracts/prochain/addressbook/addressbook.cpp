@@ -5,6 +5,7 @@
 #include <eosiolib/eosio.hpp>
 #include <string>
 #include <eosiolib/print.hpp>
+#include "addressbook.hpp"
 
 using eosio::indexed_by;
 using eosio::const_mem_fun;
@@ -15,9 +16,10 @@ public:
     explicit addressbook(action_name self) : contract(self) {};
 
     //@abi action
-    void add(const account_name account, const string& name, uint64_t phone) {
+    void add(const account_name account, const string& name, uint64_t phone, const move& m) {
 
         eosio::print("enter add, ", eosio::name{account});
+        eosio::print("m is ", eosio::name{m.challenger}, " and ", eosio::name{m.host}, "\n");
         require_auth(account);
 
         eosio::print("contract owner is ", eosio::name{_self});
@@ -26,7 +28,7 @@ public:
         auto itr = addresses.find(account);
         eosio_assert(itr == addresses.end(), "Address for acount already exist");
 
-        addresses.emplace(account, [&]( auto& address ) {
+        addresses.emplace(_self, [&]( auto& address ) {
             address.account = account;
             address.name = name;
             address.phone = phone;
