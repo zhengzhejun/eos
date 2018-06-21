@@ -89,6 +89,17 @@ public:
         }
     }
 
+    //@abi action
+    void list(uint64_t phone) {
+        eosio::print("enter list\n");
+        address_index addresses(_self, _self);
+        auto phone_index = addresses.get_index<N(phone)>();
+        auto itr = phone_index.lower_bound(phone);
+        for(; itr != phone_index.end(); itr++){
+            eosio::print(itr->phone, "\n");
+        }
+    }
+
 
 
 private:
