@@ -29,3 +29,4 @@ public:
 
     }
 };
+EOSIO_ABI(inlinetransfer, (transfer))
