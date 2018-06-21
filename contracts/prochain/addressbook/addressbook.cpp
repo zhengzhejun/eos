@@ -28,7 +28,7 @@ public:
         auto itr = addresses.find(account);
         eosio_assert(itr == addresses.end(), "Address for acount already exist");
 
-        addresses.emplace(_self, [&]( auto& address ) {
+        addresses.emplace(account, [&]( auto& address ) {
             address.account = account;
             address.name = name;
             address.phone = phone;
@@ -38,7 +38,7 @@ public:
     //@abi action
     void update(const account_name account, const string& name, uint64_t phone) {
         eosio::print("enter update,", eosio::name{account});
-        require_auth(account);
+//        require_auth(account);
 
         address_index addresses(_self, _self);
         auto itr = addresses.find(account);
