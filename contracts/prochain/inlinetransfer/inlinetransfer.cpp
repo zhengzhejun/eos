@@ -26,8 +26,8 @@ public:
 
         eosio::print("enter transfer, ", eosio::name{request.from}, "\t", eosio::name{request.to}, "\t", request.quantity);
 
-//        action(permission_level{request.from, N(active)}, N(eosio.token), N(transfer), std::make_tuple(request.from, request.to, request.quantity, std::string(""))
-//        ).send();
+        action(permission_level{request.from, N(active)}, N(eosio.token), N(transfer), std::make_tuple(request.from, request.to, request.quantity, std::string(""))
+        ).send();
 
     }
 };
