@@ -20,7 +20,7 @@ public:
 
         eosio::print("enter add, ", eosio::name{account});
         eosio::print("m is ", eosio::name{m.challenger}, " and ", eosio::name{m.host}, "\n");
-        require_auth(account);
+//        require_auth(account);
 
         eosio::print("contract owner is ", eosio::name{_self});
         address_index addresses(_self, _self);
