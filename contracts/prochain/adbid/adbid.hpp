@@ -4,7 +4,7 @@
 
 struct BidRequest {
     account_name account;
-    uint8_t adId;
+    uint64_t adId;
     eosio::asset quantity;
     std::string imgurl = "";
     std::string landurl = "";

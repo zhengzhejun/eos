@@ -197,3 +197,4 @@ private:
     typedef eosio::multi_index<N(Account), Account> account_index;
 
 };
+EOSIO_ABI(Adbid, (bid)(clear_expire)(publish_adpos)(deposit)(withdraw))
