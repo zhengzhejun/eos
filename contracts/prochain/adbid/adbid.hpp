@@ -26,7 +26,6 @@ struct PublishRequest {
     uint32_t endtime;
     uint32_t bidstarttime;
     uint32_t bidendtime;
-    eosio::asset bidasset;
 
     bool is_collide(eosio::time_point_sec stime, eosio::time_point_sec etime) const {
         return !((starttime >= stime.utc_seconds && starttime < etime.utc_seconds) | (endtime > stime.utc_seconds && endtime <= etime.utc_seconds)
