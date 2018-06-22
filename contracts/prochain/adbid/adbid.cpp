@@ -6,7 +6,6 @@
 #include <string>
 #include <eosiolib/print.hpp>
 #include <eosiolib/contract.hpp>
-#include <eosiolib/time.hpp>
 #include <string>
 #include "adbid.hpp"
 
@@ -32,7 +31,7 @@ public:
         account_index accounts(_self, _self);
         auto adpos_itr = adposes.find(bidRequest.adId);
         eosio_assert(adpos_itr != adposes.end(), "adpos is not exsit");
-        eosio_assert(adpos_itr->bidstarttime <= now() && adpos_itr->bidendtime >= now(), "bid time error");
+        eosio_assert(adpos_itr->bidstarttime.utc_seconds <= now() && adpos_itr->bidendtime.utc_seconds >= now(), "bid time error");
         auto account_itr = accounts.find(bidRequest.account);
         eosio_assert(account_itr != accounts.end(), "account is not exsit");
         eosio_assert(account_itr->balance >= bidRequest.quantity, "balance is not enough");
@@ -40,11 +39,9 @@ public:
 
         // 退款给上一个竞拍者
         if(adpos_itr->has_bid) {
-            action(permission_level{_self, N(active)}, N(eosio.token), N(transfer), std::make_tuple(_self, adpos_itr->account, adpos_itr->bidasset, std::string(""))
-            ).send();
             auto preaccount = adpos_itr->account;
             auto preaccount_itr = accounts.find(preaccount);
-            eosio_assert(preaccount != accounts.end(), "preaccount is not exsit");
+            eosio_assert(preaccount_itr != accounts.end(), "preaccount is not exsit");
             accounts.modify(preaccount_itr, 0, [&](auto& acnt) {
                 acnt.balance += adpos_itr->bidasset;
                 acnt.bidding_count--;
@@ -53,8 +50,6 @@ public:
         }
 
         // 当前竞拍者汇款给系统
-        action(permission_level{bidRequest.account, N(active)}, N(eosio.token), N(transfer), std::make_tuple(bidRequest.account, _self, bidRequest.quantity, std::string(""))
-        ).send();
         accounts.modify(account_itr, 0, [&](auto& acnt){
             acnt.balance -= bidRequest.quantity;
             acnt.bidding_count++;
@@ -76,7 +71,7 @@ public:
         adpos_index adposes(_self, _self);
         std::vector<uint64_t> ids;
         for(auto itr = adposes.begin(); itr != adposes.end(); itr++) {
-            if(itr->endtime < now()) {
+            if(itr->endtime.utc_seconds < now()) {
                 ids.push_back(itr->id);
             }
         }
@@ -97,16 +92,16 @@ public:
         adpos_index adposes(_self, _self);
 
         for(auto itr = adposes.begin(); itr != adposes.end(); itr++) {
-            eosio_assert(itr->is_collide(publishRequest.starttime, publishRequest.endtime), "time collide");
+            eosio_assert(publishRequest.is_collide(itr->starttime, itr->endtime), "time collide");
         }
 
         adposes.emplace(_self, [&](auto& adpos) {
             adpos.id = adposes.available_primary_key();
-            adpos.starttime = publishRequest.starttime;
-            adpos.endtime = publishRequest.endtime;
-            adpos.bidstarttime = publishRequest.bidstarttime;
-            adpos.bidendtime = publishRequest.bidendtime;
-        })
+            adpos.starttime = eosio::time_point_sec(publishRequest.starttime);
+            adpos.endtime = eosio::time_point_sec(publishRequest.endtime);
+            adpos.bidstarttime = eosio::time_point_sec(publishRequest.bidstarttime);
+            adpos.bidendtime = eosio::time_point_sec(publishRequest.bidendtime);
+        });
 
     }
 
@@ -142,7 +137,7 @@ public:
         eosio_assert(withdrawRequest.quantity.amount > 0, "amout must > 0");
         eosio_assert(withdrawRequest.quantity.symbol == S(4,EPRA), "asset only to epra");
         require_auth(withdrawRequest.account);
-        account_index accounts(code_account, code_account);
+        account_index accounts(_self, _self);
         auto itr = accounts.find(withdrawRequest.account);
         eosio_assert(itr != accounts.end(), "unknown account");
 
@@ -172,11 +167,6 @@ private:
         asset bidasset;
         account_name account;
         bool has_bid = false;
-
-        bool is_collide(uint32_t stime, uint32_t etime) {
-            return !((stime >= starttime.utc_seconds && stime < endtime.utc_seconds) | (etime > starttime.utc_seconds && etime <= endtime.utc_seconds)
-                    | (starttime.utc_seconds >= stime && starttime.utc_seconds < etime) | (endtime.utc_seconds > stime && endtime.utc_seconds <= etime))
-        }
 
         uint64_t primary_key() const { return id; }
 
