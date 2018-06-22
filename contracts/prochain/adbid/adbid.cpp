@@ -90,7 +90,7 @@ public:
         eosio_assert(publishRequest.starttime <= publishRequest.endtime && publishRequest.bidstarttime <= publishRequest.bidendtime
                     && publishRequest.bidendtime <= publishRequest.starttime && publishRequest.bidstarttime > now(), "time error");
         adpos_index adposes(_self, _self);
-        eosio::print(publishRequest.starttime, "\t", publishRequest.endtime, "\n")
+        eosio::print(publishRequest.starttime, "\t", publishRequest.endtime, "\n");
 
         for(auto itr = adposes.begin(); itr != adposes.end(); itr++) {
             eosio_assert(publishRequest.is_collide(itr->starttime, itr->endtime), "time collide");
