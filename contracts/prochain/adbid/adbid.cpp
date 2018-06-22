@@ -114,6 +114,7 @@ public:
             adpos.endtime = eosio::time_point_sec(publishRequest.endtime);
             adpos.bidstarttime = eosio::time_point_sec(publishRequest.bidstarttime);
             adpos.bidendtime = eosio::time_point_sec(publishRequest.bidendtime);
+            adpos.bidasset = publishRequest.bidasset;
         });
 
     }
@@ -177,7 +178,7 @@ private:
         eosio::time_point_sec bidendtime;
         std::string imgurl;
         std::string landurl;
-        asset bidasset(0, S(4,EPRA));
+        asset bidasset;
         account_name account;
         bool hasbid = false;
 
