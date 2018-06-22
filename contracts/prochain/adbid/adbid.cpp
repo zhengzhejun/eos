@@ -114,7 +114,7 @@ public:
             adpos.endtime = eosio::time_point_sec(publishRequest.endtime);
             adpos.bidstarttime = eosio::time_point_sec(publishRequest.bidstarttime);
             adpos.bidendtime = eosio::time_point_sec(publishRequest.bidendtime);
-            adpos.bidasset = publishRequest.bidasset;
+            adpos.bidasset = asset(0, S(4,EPRA));
         });
 
     }
