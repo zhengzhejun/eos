@@ -155,7 +155,7 @@ public:
     }
 
 private:
-    //@abi table AdPos i64
+    //@abi table adpos i64
     struct AdPos {
         uint64_t id;
         eosio::time_point_sec starttime;
@@ -170,11 +170,11 @@ private:
 
         uint64_t primary_key() const { return id; }
 
-        EOSLIB_SERIALIZE(AdPos, (id)(starttime)(endtime)(bidstarttime)(bidendtime)(imgurl)(landurl)(bidasset)(account));
+        EOSLIB_SERIALIZE(adpos, (id)(starttime)(endtime)(bidstarttime)(bidendtime)(imgurl)(landurl)(bidasset)(account));
     };
     typedef eosio::multi_index<N(AdPos), AdPos> adpos_index;
 
-    //@abi table Account i64
+    //@abi table account i64
     struct Account {
         account_name account;
         asset balance;
@@ -184,7 +184,7 @@ private:
         uint64_t primary_key() const { return account; }
         EOSLIB_SERIALIZE(Account, (account)(balance)(bid_success_count)(bidding_count));
     };
-    typedef eosio::multi_index<N(Account), Account> account_index;
+    typedef eosio::multi_index<N(account), Account> account_index;
 
 };
 EOSIO_ABI(Adbid, (bid)(clearexpire)(publishadpos)(deposit)(withdraw))
