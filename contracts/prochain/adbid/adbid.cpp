@@ -93,6 +93,7 @@ public:
         eosio::print(publishRequest.starttime, "\t", publishRequest.endtime, "\n");
 
         for(auto itr = adposes.begin(); itr != adposes.end(); itr++) {
+            eosio::print(itr->starttime, "\t", itr->endtime);
             eosio_assert(publishRequest.is_collide(itr->starttime, itr->endtime), "time collide");
         }
 
