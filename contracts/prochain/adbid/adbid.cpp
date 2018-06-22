@@ -83,6 +83,16 @@ public:
         }
     }
 
+    // 删除广告位
+    //@abi action
+    void removeadpos(const uint64_t id) {
+        require_auth(_self);
+        adpos_index adposes(_self, _self);
+        auto itr = adposes.find(id);
+        eosio_assert(itr != adposes.end(), "id is not exist");
+        adposes.erase(itr);
+    }
+
     // 发布广告位
     //@abi action
     void publishadpos(const PublishRequest& publishRequest) {
@@ -189,4 +199,4 @@ private:
     typedef eosio::multi_index<N(taccount), Account> account_index;
 
 };
-EOSIO_ABI(Adbid, (bid)(clearexpire)(publishadpos)(deposit)(withdraw))
+EOSIO_ABI(Adbid, (bid)(clearexpire)(publishadpos)(deposit)(withdraw)(removeadpos))
