@@ -66,7 +66,7 @@ public:
 
     // 清理过期广告位
     //@abi action
-    void clear_expire() {
+    void clearExpire() {
         require_auth(_self);
         adpos_index adposes(_self, _self);
         std::vector<uint64_t> ids;
@@ -85,7 +85,7 @@ public:
 
     // 发布广告位
     //@abi action
-    void publish_adpos(const PublishRequest& publishRequest) {
+    void publishAdpos(const PublishRequest& publishRequest) {
         require_auth(_self);
         eosio_assert(publishRequest.starttime <= publishRequest.endtime && publishRequest.bidstarttime <= publishRequest.bidendtime
                     && publishRequest.bidendtime <= publishRequest.starttime && publishRequest.bidstarttime > now(), "time error");
@@ -187,4 +187,4 @@ private:
     typedef eosio::multi_index<N(Account), Account> account_index;
 
 };
-EOSIO_ABI(Adbid, (bid)(clear_expire)(publish_adpos)(deposit)(withdraw))
+EOSIO_ABI(Adbid, (bid)(clearExpire)(publishAdpos)(deposit)(withdraw))
