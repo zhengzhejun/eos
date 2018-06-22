@@ -24,8 +24,8 @@ public:
         eosio_assert(bidRequest.quantity.is_valid(), "invalid quantity");
         eosio_assert(bidRequest.quantity.amount > 0, "amout must > 0");
         eosio_assert(bidRequest.quantity.symbol == S(4,EPRA), "asset only to epra");
-        eosio_assert(bidRequest.imgurl.size() > 0, "imgurl is empty");
-        eosio_assert(bidRequest.landurl.size() > 0, "landurl is empty");
+        eosio_assert(bidRequest.imgurl.size() > 0 && bidRequest.imgurl.size() < 300, "imgurl is empty or too long");
+        eosio_assert(bidRequest.landurl.size() > 0 && bidRequest.landurl.size() < 300, "landurl is empty or too long");
 
         adpos_index adposes(_self, _self);
         account_index accounts(_self, _self);
