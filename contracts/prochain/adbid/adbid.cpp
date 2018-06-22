@@ -44,7 +44,7 @@ public:
             eosio_assert(preaccount_itr != accounts.end(), "preaccount is not exsit");
             accounts.modify(preaccount_itr, 0, [&](auto& acnt) {
                 acnt.balance += adpos_itr->bidasset;
-                acnt.bidding_count--;
+                acnt.biddingcount--;
             });
 
         }
@@ -52,7 +52,7 @@ public:
         // 当前竞拍者汇款给系统
         accounts.modify(account_itr, 0, [&](auto& acnt){
             acnt.balance -= bidRequest.quantity;
-            acnt.bidding_count++;
+            acnt.biddingcount++;
         });
         adposes.modify(adpos_itr, 0, [&](auto& adpos) {
             adpos.account = bidRequest.account;
@@ -150,7 +150,7 @@ public:
         action(permission_level{ _self, N(active) }, N(eosio.token), N(transfer),
                 std::make_tuple(_self, withdrawRequest.account, withdrawRequest.quantity, std::string(""))
         ).send();
-        if(itr->balance.amount == 0 && itr->bidding_count == 0) {
+        if(itr->balance.amount == 0 && itr->biddingcount == 0) {
             accounts.erase(itr);
         }
     }
@@ -167,11 +167,11 @@ private:
         std::string landurl;
         asset bidasset;
         account_name account;
-        bool has_bid = false;
+        bool hasbid = false;
 
         uint64_t primary_key() const { return id; }
 
-        EOSLIB_SERIALIZE(AdPos, (id)(starttime)(endtime)(bidstarttime)(bidendtime)(imgurl)(landurl)(bidasset)(account)(has_bid));
+        EOSLIB_SERIALIZE(AdPos, (id)(starttime)(endtime)(bidstarttime)(bidendtime)(imgurl)(landurl)(bidasset)(account)(hasbid));
     };
     typedef eosio::multi_index<N(adpos), AdPos> adpos_index;
 
@@ -179,11 +179,11 @@ private:
     struct Account {
         account_name account;
         asset balance;
-        uint32_t bid_success_count = 0;
-        uint32_t bidding_count = 0;
+        uint32_t bidsuccesscount = 0;
+        uint32_t biddingcount = 0;
 
         uint64_t primary_key() const { return account; }
-        EOSLIB_SERIALIZE(Account, (account)(balance)(bid_success_count)(bidding_count));
+        EOSLIB_SERIALIZE(Account, (account)(balance)(bidsuccesscount)(biddingcount));
     };
     typedef eosio::multi_index<N(account), Account> account_index;
 
