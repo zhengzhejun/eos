@@ -171,7 +171,7 @@ private:
 
         uint64_t primary_key() const { return id; }
 
-        EOSLIB_SERIALIZE(AdPos, (id)(starttime)(endtime)(bidstarttime)(bidendtime)(imgurl)(landurl)(bidasset)(account));
+        EOSLIB_SERIALIZE(AdPos, (id)(starttime)(endtime)(bidstarttime)(bidendtime)(imgurl)(landurl)(bidasset)(account)(has_bid));
     };
     typedef eosio::multi_index<N(adpos), AdPos> adpos_index;
 
