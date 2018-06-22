@@ -38,7 +38,7 @@ public:
         eosio_assert(bidRequest.quantity > adpos_itr->bidasset, "bid is less than current");
 
         // 退款给上一个竞拍者
-        if(adpos_itr->has_bid) {
+        if(adpos_itr->hasbid) {
             auto preaccount = adpos_itr->account;
             auto preaccount_itr = accounts.find(preaccount);
             eosio_assert(preaccount_itr != accounts.end(), "preaccount is not exsit");
