@@ -33,6 +33,7 @@ public:
         auto adpos_itr = adposes.find(bidRequest.adId);
         eosio_assert(adpos_itr != adposes.end(), "adpos is not exsit");
         eosio_assert(adpos_itr->bidstarttime.utc_seconds <= now() && adpos_itr->bidendtime.utc_seconds >= now(), "bid time error");
+
         auto account_itr = accounts.find(bidRequest.account);
         eosio_assert(account_itr != accounts.end(), "account is not exsit");
         eosio_assert(account_itr->balance >= bidRequest.quantity, "balance is not enough");
@@ -40,6 +41,7 @@ public:
 
         // 退款给上一个竞拍者
         if(adpos_itr->hasbid) {
+            eosio_assert(adpos_itr->account != bidRequest.account, "current account is you, you dont need to bid");
             auto preaccount = adpos_itr->account;
             auto preaccount_itr = accounts.find(preaccount);
             eosio_assert(preaccount_itr != accounts.end(), "preaccount is not exsit");
@@ -60,6 +62,7 @@ public:
             adpos.bidasset = bidRequest.quantity;
             adpos.imgurl = bidRequest.imgurl;
             adpos.landurl = bidRequest.landurl;
+            adpos.hasbid = true;
         });
 
 
