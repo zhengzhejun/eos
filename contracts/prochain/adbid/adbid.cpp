@@ -7,6 +7,7 @@
 #include <eosiolib/print.hpp>
 #include <eosiolib/contract.hpp>
 #include <string>
+
 #include "adbid.hpp"
 
 using eosio::asset;
@@ -176,7 +177,7 @@ private:
         eosio::time_point_sec bidendtime;
         std::string imgurl;
         std::string landurl;
-        asset bidasset;
+        asset bidasset(0, S(4,EPRA));
         account_name account;
         bool hasbid = false;
 
