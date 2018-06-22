@@ -132,6 +132,7 @@ public:
         if(itr == accounts.end()) {
             itr = accounts.emplace(_self, [&](auto& acnt){
                 acnt.account = account;
+                acnt.balance = asset(0, S(4,EPRA));
             });
         }
 
