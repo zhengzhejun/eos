@@ -170,9 +170,9 @@ private:
 
         uint64_t primary_key() const { return id; }
 
-        EOSLIB_SERIALIZE(adpos, (id)(starttime)(endtime)(bidstarttime)(bidendtime)(imgurl)(landurl)(bidasset)(account));
+        EOSLIB_SERIALIZE(AdPos, (id)(starttime)(endtime)(bidstarttime)(bidendtime)(imgurl)(landurl)(bidasset)(account));
     };
-    typedef eosio::multi_index<N(AdPos), AdPos> adpos_index;
+    typedef eosio::multi_index<N(adpos), AdPos> adpos_index;
 
     //@abi table account i64
     struct Account {
