@@ -201,7 +201,7 @@ void blocklog::read_log()
             ++block_num;
             if (block_num % 1000 == 0)
             {
-                  std::cout << block_num << std::endl;
+                  std::cout << block_num << " : " << last_block<< std::endl;
             }
             contains_obj = true;
       }
