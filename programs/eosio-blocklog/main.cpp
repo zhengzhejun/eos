@@ -171,7 +171,7 @@ void blocklog::read_log()
                               fc::mutable_variant_object unpacked_transaction_variant(trx);
                               unpacked_transaction_variant.set("id", trx.id().str());
                               unpacked_transaction_variant.set("actions", action_variants);
-                              *eos_out << fc::json::to_pretty_string(unpacked_transaction_variant) << "\n";
+                              *eos_out << fc::json::to_string(unpacked_transaction_variant) << "\n";
                         }
                         if (isProchaintech)
                         {
