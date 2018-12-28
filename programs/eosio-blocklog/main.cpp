@@ -145,22 +145,22 @@ void blocklog::read_log()
                                           prochaintech_abi_def = fc::raw::unpack<abi_def>(setabi_act.abi);
                                     }
                               }
-                              if (act.account == N(eosio.token))
-                              {
-                                    isEos = true;
-                                    fc::variant action_variant;
-                                    abi_serializer::to_variant(act, action_variant, [&](account_name n) {
-                                          optional<abi_serializer> result = abi_serializer(eosio_token_abi_def, deadline);
-                                          return result;
-                                    }, deadline);
-                                    action_variants.push_back(action_variant);
-                              }
+                              // if (act.account == N(eosio.token))
+                              // {
+                              //       isEos = true;
+                              //       fc::variant action_variant;
+                              //       abi_serializer::to_variant(act, action_variant, [&](account_name n) {
+                              //             optional<abi_serializer> result = abi_serializer(eosio_token_abi_def, deadline);
+                              //             return result;
+                              //       }, deadline);
+                              //       action_variants.push_back(action_variant);
+                              // }
                               if (act.account == N(prochaintech))
                               {
                                     isProchaintech = true;
                                     fc::variant action_variant;
                                     abi_serializer::to_variant(act, action_variant, [&](account_name n) {
-                                          optional<abi_serializer> result = abi_serializer(eosio_token_abi_def, deadline);
+                                          optional<abi_serializer> result = abi_serializer(prochaintech_abi_def, deadline);
                                           return result;
                                     }, deadline);
                                     action_variants.push_back(action_variant);
