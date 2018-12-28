@@ -238,6 +238,9 @@ void blocklog::initialize(const variables_map &options)
                   else
                         prochaintech_output_file = bld;
             }
+            if (options.count("first")) {
+                  first_block = options.at("first").as<uint32_t>();
+            }
             // eosio_abi_def = fc::json::from_file(options.at("eosio-abi-path").as<std::string>()).as<abi_def>();
       }
       FC_LOG_AND_RETHROW()
