@@ -113,10 +113,10 @@ void blocklog::read_log()
       fc::variant pretty_output;
       const fc::microseconds deadline = fc::seconds(10);
       auto print_block = [&](signed_block_ptr &next) {
-            abi_serializer::to_variant(*next,
-                                       pretty_output,
-                                       [](account_name n) { return optional<abi_serializer>(); },
-                                       deadline);
+            // abi_serializer::to_variant(*next,
+            //                            pretty_output,
+            //                            [](account_name n) { return optional<abi_serializer>(); },
+            //                            deadline);
             // const auto block_id = next->id();
             // const uint32_t ref_block_prefix = block_id._hash[1];
             for (const transaction_receipt &receipt : next->transactions)
