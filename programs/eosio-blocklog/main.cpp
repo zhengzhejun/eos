@@ -39,7 +39,7 @@ struct blocklog
       uint32_t last_block;
       bool no_pretty_print;
       bool as_json_array;
-      abi_def eosio_abi_def;
+      // abi_def eosio_abi_def;
       abi_def eosio_token_abi_def;
       abi_def prochaintech_abi_def;
 };
@@ -209,7 +209,7 @@ void blocklog::read_log()
 
 void blocklog::set_program_options(options_description &cli)
 {
-      cli.add_options()("blocks-dir", bpo::value<bfs::path>()->default_value("blocks"), "the location of the blocks directory (absolute path or relative to the current directory)")("prochaintech-output-file", bpo::value<bfs::path>(), "the file to write the block log output to (absolute or relative path).  If not specified then output is to stdout.")("eos-output-file", bpo::value<bfs::path>(), "the file to write the block log output to (absolute or relative path).  If not specified then output is to stdout.")("eosio-abi-path", bpo::value<std::string>(), "eosio-abi-path")("first", bpo::value<uint32_t>(&first_block)->default_value(1), "the first block number to log")("last", bpo::value<uint32_t>(&last_block)->default_value(std::numeric_limits<uint32_t>::max()), "the last block number (inclusive) to log")("no-pretty-print", bpo::bool_switch(&no_pretty_print)->default_value(false), "Do not pretty print the output.  Useful if piping to jq to improve performance.")("as-json-array", bpo::bool_switch(&as_json_array)->default_value(false), "Print out json blocks wrapped in json array (otherwise the output is free-standing json objects).")("help", "Print this help message and exit.");
+      cli.add_options()("blocks-dir", bpo::value<bfs::path>()->default_value("blocks"), "the location of the blocks directory (absolute path or relative to the current directory)")("prochaintech-output-file", bpo::value<bfs::path>(), "the file to write the block log output to (absolute or relative path).  If not specified then output is to stdout.")("eos-output-file", bpo::value<bfs::path>(), "the file to write the block log output to (absolute or relative path).  If not specified then output is to stdout.")("first", bpo::value<uint32_t>(&first_block)->default_value(1), "the first block number to log")("last", bpo::value<uint32_t>(&last_block)->default_value(std::numeric_limits<uint32_t>::max()), "the last block number (inclusive) to log")("no-pretty-print", bpo::bool_switch(&no_pretty_print)->default_value(false), "Do not pretty print the output.  Useful if piping to jq to improve performance.")("as-json-array", bpo::bool_switch(&as_json_array)->default_value(false), "Print out json blocks wrapped in json array (otherwise the output is free-standing json objects).")("help", "Print this help message and exit.");
 }
 
 void blocklog::initialize(const variables_map &options)
@@ -238,7 +238,7 @@ void blocklog::initialize(const variables_map &options)
                   else
                         prochaintech_output_file = bld;
             }
-            eosio_abi_def = fc::json::from_file(options.at("eosio-abi-path").as<std::string>()).as<abi_def>();
+            // eosio_abi_def = fc::json::from_file(options.at("eosio-abi-path").as<std::string>()).as<abi_def>();
       }
       FC_LOG_AND_RETHROW()
 }
